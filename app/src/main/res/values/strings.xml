@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">ExploreCity</string>
+    <string name="spinner_category">¿Qué estás buscando?</string>
+    <string name="search_name">¿Nombre del evento?</string>
+    <string name="search_where">¿Dónde?</string>
+    <string name="search_button">Buscar evento</string>
+    <string name="google_maps_api_key">AIzaSyAfDbgXthLEyq-eqiKlnDPbwDZR4jLrSHI</string>
+    <string name="lista_eventos">Lista de eventos</string>
+    <string name="evento">Evento</string>
+</resources>

@@ -1,0 +1,22 @@
+<tabs>
+    <tab
+        icon="@drawable/ic_search"
+        id="@+id/bb_menu_search"
+        title="Buscar" />
+    <tab
+        icon="@drawable/ic_nearby"
+        id="@+id/bb_menu_nearby"
+        title="Cercanos"
+
+        />
+    <tab
+        icon="@drawable/ic_add_circle"
+        id="@+id/bb_menu_friends"
+        title="Añadir"
+
+        />
+    <tab
+        icon="@drawable/ic_person"
+        id="@+id/bb_menu_food"
+        title="Perfil" />
+</tabs>
