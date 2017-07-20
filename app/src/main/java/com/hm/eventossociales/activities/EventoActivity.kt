@@ -4,35 +4,24 @@ import `in`.myinnos.imagesliderwithswipeslibrary.Animations.DescriptionAnimation
 import `in`.myinnos.imagesliderwithswipeslibrary.SliderLayout
 import `in`.myinnos.imagesliderwithswipeslibrary.SliderTypes.BaseSliderView
 import `in`.myinnos.imagesliderwithswipeslibrary.SliderTypes.TextSliderView
-import android.content.res.Resources
 import android.databinding.DataBindingUtil
-import android.location.Location
 import android.os.Bundle
-import android.os.Parcel
-import android.os.Parcelable
-import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
 import com.hm.eventossociales.R
-import com.hm.eventossociales.config.converter.JacksonConverterFactory
+import com.hm.eventossociales.util.converter.JacksonConverterFactory
 import com.hm.eventossociales.databinding.ActivityEventoBinding
-import com.hm.eventossociales.databinding.ActivityListaEventosBinding
 import com.hm.eventossociales.fragments.BaseFragment
 import com.hm.eventossociales.services.EventoService
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
-import android.support.v4.app.NavUtils
-import android.transition.Slide
-import android.util.Log
 import android.view.MenuItem
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.hm.eventossociales.domain.Evento
 import com.hm.eventossociales.services.CategoriaService
 import com.hm.eventossociales.services.FotoService
-import kotlinx.android.synthetic.main.activity_evento.*
 
 
 /**
@@ -154,6 +143,8 @@ class EventoActivity() : AppCompatActivity(), OnMapReadyCallback {
                                 binding.evento = response
                                 if(response.asignaCategorias.isNotEmpty()) {
                                     getCategoria(response.asignaCategorias[0]?.categoriaRel?.href!!)
+                                } else {
+                                    binding.categoriaText.text = "Misceláneos";
                                 }
                             }
                     )

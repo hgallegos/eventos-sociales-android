@@ -35,7 +35,7 @@ import com.google.android.gms.location.LocationListener
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.hm.eventossociales.activities.ListaEventosActivity
-import com.hm.eventossociales.config.converter.JacksonConverterFactory
+import com.hm.eventossociales.util.converter.JacksonConverterFactory
 import com.hm.eventossociales.services.EventoService
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory

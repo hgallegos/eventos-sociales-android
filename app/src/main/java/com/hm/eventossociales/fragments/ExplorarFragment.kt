@@ -1,7 +1,9 @@
 package com.hm.eventossociales.fragments
 
 import android.content.Intent
+import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,10 +11,19 @@ import android.widget.Button
 import android.widget.EditText
 import com.hm.eventossociales.R
 import com.hm.eventossociales.activities.ListaEventosActivity
+import com.hm.eventossociales.databinding.ActivityEventoBinding
+import com.hm.eventossociales.databinding.FragmentSearchBinding
+import com.hm.eventossociales.domain.views.ItemViewModel
+import com.hm.eventossociales.domain.views.SpinnerViewModel
+import com.hm.eventossociales.services.CategoriaService
+import rx.android.schedulers.AndroidSchedulers
+import rx.schedulers.Schedulers
 
 class ExplorarFragment : BaseFragment() {
 
     private val TAG = "ExplorarFragment"
+    internal lateinit var binding: FragmentSearchBinding;
+
 
     override fun onStart() {
         super.onStart()
@@ -30,14 +41,37 @@ class ExplorarFragment : BaseFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater!!.inflate(R.layout.fragment_search, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false);
 
-        val button = view.findViewById<Button>(R.id.search)
+        val button = binding.search;
+
+        val viewModel = SpinnerViewModel()
+        binding.spinnerViewModel = viewModel
+
+        getCategories();
+
         button.setOnClickListener { searchForEvents() }
-        return view
+        return binding.root
     }
 
     public fun getCategories() {
+        val categoriaService = retrofitInstance.create(CategoriaService::class.java);
+
+        categoriaService.getCategorias()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        { response ->
+                            Log.d(TAG, response.categorias?.size.toString())
+                            val viewModel = SpinnerViewModel()
+                            viewModel.addItems(response.categorias)
+                            viewModel.setContext(this.view)
+                            binding.spinnerViewModel = viewModel
+                        },
+                        { error ->
+                            Log.e(TAG, error.message)
+                        }
+                )
     }
 
     fun searchForEvents() {

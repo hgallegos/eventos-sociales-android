@@ -1,4 +1,4 @@
-package com.hm.eventossociales.config;
+package com.hm.eventossociales.util;
 
 import com.hm.eventossociales.domain.Usuario;
 

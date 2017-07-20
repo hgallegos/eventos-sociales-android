@@ -1,4 +1,4 @@
-package com.hm.eventossociales.config.converter;
+package com.hm.eventossociales.util.converter;
 
 import com.fasterxml.jackson.databind.ObjectReader;
 

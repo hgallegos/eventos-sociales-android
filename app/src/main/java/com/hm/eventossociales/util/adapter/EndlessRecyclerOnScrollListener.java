@@ -1,4 +1,4 @@
-package com.hm.eventossociales.config.adapter;
+package com.hm.eventossociales.util.adapter;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;

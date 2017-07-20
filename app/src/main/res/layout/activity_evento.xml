@@ -13,7 +13,7 @@
 
         <variable
             name="categoria"
-            type="com.hm.eventossociales.domain.Categoria"/>
+            type="com.hm.eventossociales.domain.Categoria" />
     </data>
 
     <android.support.design.widget.CoordinatorLayout
@@ -79,28 +79,101 @@
                 <android.support.v7.widget.CardView
                     android:id="@+id/info"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
+                    android:layout_height="wrap_content"
                     android:layout_below="@+id/carMap"
                     android:layout_margin="5dp"
                     app:cardCornerRadius="2dp">
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
+                    <RelativeLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/material_layout_keylines_screen_edge_margin">
+                        android:padding="16dp">
+
                         <TextView
                             android:id="@+id/categoriaLabel"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingTop="@dimen/material_component_cards_supporting_text_top_padding"
-                            android:text="Categoria:" />
+                            android:textStyle="bold"
+                            android:textSize="@dimen/material_text_body_medium"
+                            android:text="Categoria"
+                            android:paddingBottom="2dp"/>
 
                         <TextView
                             android:id="@+id/categoriaText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{categoria.nombre}"/>
-                    </LinearLayout>
+                            android:text="@{categoria.nombre}"
+                            android:layout_below="@id/categoriaLabel"
+                            android:paddingBottom="2dp"/>
+
+                        <TextView
+                            android:id="@+id/desdeLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/categoriaText"
+                            android:textStyle="bold"
+                            android:text="Desde"
+                            android:paddingBottom="2dp"/>
+
+                        <TextView
+                            android:id="@+id/desdeText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{evento.fechaInicio.toGMTString()}"
+                            android:layout_below="@id/desdeLabel"
+                            android:paddingBottom="2dp"/>
+
+                        <TextView
+                            android:id="@+id/hastaLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/desdeText"
+                            android:textStyle="bold"
+                            android:text="Hasta"
+                            android:paddingBottom="2dp"/>
+
+                        <TextView
+                            android:id="@+id/hastaText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{evento.fechaFin.toGMTString()}"
+                            android:layout_below="@id/hastaLabel"
+                            android:paddingBottom="2dp"/>
+
+                        <TextView
+                            android:id="@+id/direccionLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/hastaText"
+                            android:textStyle="bold"
+                            android:text="Dirección"
+                            android:paddingBottom="2dp"/>
+
+                        <TextView
+                            android:id="@+id/direccionText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{evento.pDireccion}"
+                            android:layout_below="@id/direccionLabel"
+                            android:paddingBottom="2dp"/>
+
+                        <TextView
+                            android:id="@+id/descriptionLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/direccionText"
+                            android:textStyle="bold"
+                            android:text="Descripción"
+                            android:paddingBottom="2dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{evento.descripcion}"
+                            android:layout_below="@id/descriptionLabel" />
+
+                    </RelativeLayout>
+
                 </android.support.v7.widget.CardView>
             </RelativeLayout>
         </ScrollView>

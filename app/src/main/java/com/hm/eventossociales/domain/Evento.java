@@ -32,6 +32,7 @@ public class Evento extends BaseObservable implements Serializable {
     private double pLng;
     private String pTipo;
     private List<AsignaCategorias> asignaCategorias;
+    private String imageUrl;
 
     @Link
     private HALLink self;
@@ -171,5 +172,17 @@ public class Evento extends BaseObservable implements Serializable {
 
     public void setAsignaCategorias(List<AsignaCategorias> asignaCategorias) {
         this.asignaCategorias = asignaCategorias;
+    }
+
+    public String getPDireccion() {
+        return this.pDireccion;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

@@ -4,13 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 
-import com.hm.eventossociales.R;
-import com.hm.eventossociales.config.converter.JacksonConverterFactory;
+import com.hm.eventossociales.util.converter.JacksonConverterFactory;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;

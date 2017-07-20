@@ -1,25 +1,21 @@
 package com.hm.eventossociales.activities
 
-import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.location.Location
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import com.hm.eventossociales.R
-import com.hm.eventossociales.config.adapter.EndlessRecyclerOnScrollListener
-import com.hm.eventossociales.config.adapter.RecyclerViewScrollAdapter
-import com.hm.eventossociales.config.converter.JacksonConverterFactory
+import com.hm.eventossociales.util.adapter.EndlessRecyclerOnScrollListener
+import com.hm.eventossociales.util.converter.JacksonConverterFactory
 import com.hm.eventossociales.databinding.ActivityListaEventosBinding
-import com.hm.eventossociales.domain.Evento
 import com.hm.eventossociales.domain.views.ItemViewModel
 import com.hm.eventossociales.fragments.BaseFragment
 import com.hm.eventossociales.services.EventoService
-import me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
 import rx.android.schedulers.AndroidSchedulers
@@ -211,5 +207,15 @@ class ListaEventosActivity : AppCompatActivity() {
                 .addConverterFactory(JacksonConverterFactory.create())
                 .baseUrl(BaseFragment.BASE_URL)
                 .build()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.getItemId()) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
     }
 }

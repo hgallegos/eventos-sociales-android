@@ -1,5 +1,6 @@
 package com.hm.eventossociales.domain
 
+import dk.nykredit.jackson.dataformat.hal.annotation.EmbeddedResource
 import dk.nykredit.jackson.dataformat.hal.annotation.Resource
 
 /**
@@ -8,5 +9,7 @@ import dk.nykredit.jackson.dataformat.hal.annotation.Resource
 @Resource
 class CategoriaResource: BaseResource() {
 
+    @EmbeddedResource("evento_categorias")
+    var categorias: List<Categoria>? = null
 
 }
