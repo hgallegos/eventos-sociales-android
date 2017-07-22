@@ -73,7 +73,7 @@ dependencies {
     compile 'me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-recyclerview:2.1.0'
     compile 'com.github.myinnos:ImageSliderWithSwipes:1.0.2'
     compile 'com.dmitrymalkovich.android:material-design-dimens:1.4'
-    compile 'ayar.oktay.library:advancedtextview:0.4.5'
+    compile 'codelight.studios:android-smart-login:1.2'
 }
 repositories {
     mavenCentral()

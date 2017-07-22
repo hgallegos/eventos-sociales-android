@@ -33,15 +33,6 @@ public class SpinnerViewModel {
         @Override
         public void onItemBind(ItemBinding itemBinding, int position, Categoria item) {
             itemBinding.set(BR.item, R.layout.spinner_item);
-            if (view != null) {
-                Spinner spinner = view.findViewById(R.id.categoria);
-                if (position == 0) {
-                    spinner.setEnabled(false);
-
-                } else {
-                    spinner.setEnabled(true);
-                }
-            }
         }
     };
 
