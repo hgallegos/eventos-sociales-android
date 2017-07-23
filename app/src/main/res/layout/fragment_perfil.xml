@@ -29,46 +29,14 @@
                 android:textAlignment="center"
                 android:textSize="@dimen/material_text_size_display_1_regular" />
 
-            <EditText
-                android:id="@+id/nombre"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/title"
-                android:layout_margin="20dp"
-                android:ems="10"
-                android:hint="@string/search_name"
-                android:inputType="text" />
-
-            <EditText
-                android:id="@+id/lugar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/nombre"
-                android:layout_alignStart="@+id/nombre"
-                android:layout_below="@+id/nombre"
-                android:ems="10"
-                android:hint="@string/search_where"
-                android:inputType="text" />
-
-
             <Button
-                android:id="@+id/search"
+                android:id="@+id/logout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/categoria"
-                android:layout_below="@+id/lugar"
-                android:text="@string/search_button" />
+                android:layout_alignStart="@+id/title"
+                android:layout_below="@+id/title"
+                android:text="Cerrar Sesión" />
 
-            <com.facebook.login.widget.LoginButton
-                android:id="@+id/facebook_sign_in_button"
-                android:layout_width="wrap_content"
-                android:layout_height="43dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="15dp"
-                android:layout_below="@+id/search"/>
         </RelativeLayout>
 
     </FrameLayout>

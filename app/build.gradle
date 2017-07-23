@@ -68,6 +68,8 @@ dependencies {
     kapt "com.android.databinding:compiler:$android_plugin_version"
     compile 'com.google.android.gms:play-services-maps:11.0.2'
     compile 'com.google.android.gms:play-services-location:11.0.2'
+    compile 'com.google.android.gms:play-services-auth:11.0.2'
+    compile 'com.google.android.gms:play-services-plus:11.0.2'
 
     compile 'me.tatarka.bindingcollectionadapter2:bindingcollectionadapter:2.1.0'
     compile 'me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-recyclerview:2.1.0'

@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity(),
     private val INDEX_BUSCAR = FragNavController.TAB1
     private val INDEX_NEARBY = FragNavController.TAB2
     private val INDEX_FRIENDS = FragNavController.TAB3
-    private val INDEX_FOOD = FragNavController.TAB4
+    private val INDEX_PROFILE = FragNavController.TAB4
 
     private val PERMISSION_CALLBACK_CONSTANT = 101
     private val REQUEST_PERMISSION_SETTING = 102
@@ -94,9 +94,9 @@ class MainActivity : AppCompatActivity(),
         setSupportActionBar(binding.toolbar)
 
         mGoogleApiClient = GoogleApiClient.Builder(this)
+                .enableAutoManage(this,0, this)
                 .addApi(LocationServices.API)
                 .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
                 .build()
 
         checkPermissions()
@@ -123,9 +123,9 @@ class MainActivity : AppCompatActivity(),
                     lastIndex = mNavController!!.currentStackIndex
                     mNavController!!.switchTab(INDEX_FRIENDS)
                 }
-                R.id.bb_menu_food -> {
+                R.id.bb_menu_profile -> {
                     lastIndex = mNavController!!.currentStackIndex
-                    mNavController!!.switchTab(INDEX_FOOD)
+                    mNavController!!.switchTab(INDEX_PROFILE)
                 }
             }
             first = false
@@ -319,7 +319,7 @@ class MainActivity : AppCompatActivity(),
             INDEX_BUSCAR -> return ExplorarFragment.newInstance(0)
             INDEX_NEARBY -> return NearbyFragment.newInstance(0)
             INDEX_FRIENDS -> return AddFragment.newInstance(0)
-            INDEX_FOOD -> return PerfilFragment.newInstance(0)
+            INDEX_PROFILE -> return PerfilFragment.newInstance(0)
         }
         throw IllegalStateException("Need to send an index that we know")
     }
@@ -409,6 +409,10 @@ class MainActivity : AppCompatActivity(),
                 .addConverterFactory(JacksonConverterFactory.create())
                 .baseUrl(BaseFragment.BASE_URL)
                 .build()
+    }
+
+    public fun getApiClient(): GoogleApiClient {
+        return mGoogleApiClient
     }
 
 }

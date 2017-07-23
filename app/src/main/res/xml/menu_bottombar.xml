@@ -17,6 +17,6 @@
         />
     <tab
         icon="@drawable/ic_person"
-        id="@+id/bb_menu_food"
+        id="@+id/bb_menu_profile"
         title="Perfil" />
 </tabs>
