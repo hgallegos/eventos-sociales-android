@@ -119,7 +119,7 @@ class PerfilFragment : BaseFragment() {
     }
 
     private fun isTheUserLoginIn(): Boolean {
-        val sharedPref = activity.getSharedPreferences("explorecity", Context.MODE_PRIVATE)
+        val sharedPref = activity.getSharedPreferences(MainActivity::getPackageName.name, Context.MODE_PRIVATE)
 
         return sharedPref.contains("user");
     }
