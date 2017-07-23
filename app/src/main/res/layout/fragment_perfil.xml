@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.hm.eventossociales.R" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="27dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="Descubre la cultura de tu ciudad"
+                android:textAlignment="center"
+                android:textSize="@dimen/material_text_size_display_1_regular" />
+
+            <EditText
+                android:id="@+id/nombre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/title"
+                android:layout_margin="20dp"
+                android:ems="10"
+                android:hint="@string/search_name"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/lugar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/nombre"
+                android:layout_alignStart="@+id/nombre"
+                android:layout_below="@+id/nombre"
+                android:ems="10"
+                android:hint="@string/search_where"
+                android:inputType="text" />
+
+
+            <Button
+                android:id="@+id/search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/categoria"
+                android:layout_below="@+id/categoria"
+                android:text="@string/search_button" />
+        </RelativeLayout>
+
+    </FrameLayout>
+</layout>

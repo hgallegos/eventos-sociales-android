@@ -7,4 +7,5 @@
     <string name="google_maps_api_key">AIzaSyAfDbgXthLEyq-eqiKlnDPbwDZR4jLrSHI</string>
     <string name="lista_eventos">Lista de eventos</string>
     <string name="evento">Evento</string>
+    <string name="facebook_app_id">257202861445039</string>
 </resources>
