@@ -58,8 +58,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignStart="@+id/categoria"
-                android:layout_below="@+id/categoria"
+                android:layout_below="@+id/lugar"
                 android:text="@string/search_button" />
+
+            <com.facebook.login.widget.LoginButton
+                android:id="@+id/facebook_sign_in_button"
+                android:layout_width="wrap_content"
+                android:layout_height="43dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_below="@+id/search"/>
         </RelativeLayout>
 
     </FrameLayout>
