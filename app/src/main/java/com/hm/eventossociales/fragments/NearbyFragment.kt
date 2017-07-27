@@ -12,6 +12,8 @@ import android.provider.Settings
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
+import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -23,8 +25,10 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.hm.eventossociales.R
+import com.hm.eventossociales.activities.EventoActivity
 import com.hm.eventossociales.domain.Evento
 import com.hm.eventossociales.services.EventoService
 
@@ -32,7 +36,7 @@ import retrofit2.Retrofit
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 
-class NearbyFragment : BaseFragment() {
+class NearbyFragment : BaseFragment(), GoogleMap.OnInfoWindowClickListener {
 
     internal lateinit var mMapView: MapView
     private var googleMap: GoogleMap? = null
@@ -49,7 +53,8 @@ class NearbyFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.fragment_nearby, container, false)
-
+        val toolbar: Toolbar = view.findViewById(R.id.fragment_toolbar)
+        (activity as AppCompatActivity).setSupportActionBar(toolbar)
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(activity)
 
         mMapView = view.findViewById<View>(R.id.mapView) as MapView
@@ -118,7 +123,7 @@ class NearbyFragment : BaseFragment() {
     }
 
     private fun getEventos() {
-        val retro: Retrofit = getRetrofitInstance()
+        val retro: Retrofit = retrofitInstance
         val eventoService: EventoService = retro.create(EventoService::class.java)
 
         eventoService.getEventos()
@@ -150,6 +155,8 @@ class NearbyFragment : BaseFragment() {
             googleMap = mMap
 
             googleMap!!.isMyLocationEnabled = true
+
+            googleMap?.setOnInfoWindowClickListener(this)
 
             mFusedLocationClient.lastLocation.addOnSuccessListener(activity, { location ->
                 // Got last known location. In some rare situations this can be null.
@@ -195,7 +202,7 @@ class NearbyFragment : BaseFragment() {
             googleMap = mMap
             googleMap!!.addMarker(MarkerOptions()
                     .position(LatLng(evento.getpLat(), evento.getpLng()))
-                    .title(evento.nombre))
+                    .title(evento.nombre)).tag = evento.self.href
         }
     }
 
@@ -286,6 +293,27 @@ class NearbyFragment : BaseFragment() {
     override fun onLowMemory() {
         super.onLowMemory()
         mMapView.onLowMemory()
+    }
+
+    override fun onInfoWindowClick(marker: Marker?) {
+        val eventoUrl = marker?.tag as String?
+
+        if( eventoUrl != null) {
+            retrofitInstance.create(EventoService::class.java)
+                    .getEventoByUrl(eventoUrl)
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            { evento ->
+                                val intent = Intent(activity.applicationContext, EventoActivity::class.java)
+                                intent.putExtra("nombre", evento.nombre)
+                                intent.putExtra("eventoUrl", evento.self.href)
+                                intent.putExtra("fotosUrl", evento.fotos.href)
+                                intent.putExtra("LatLng", LatLng(evento.getpLat(), evento.getpLng()))
+                                activity.applicationContext.startActivity(intent)
+                            }
+                    )
+        }
     }
 
     companion object {

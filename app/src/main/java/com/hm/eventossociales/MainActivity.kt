@@ -56,7 +56,6 @@ class MainActivity : AppCompatActivity(),
     private val INDEX_BUSCAR = FragNavController.TAB1
     private val INDEX_NEARBY = FragNavController.TAB2
     private val INDEX_FRIENDS = FragNavController.TAB3
-    private val INDEX_PROFILE = FragNavController.TAB4
 
     private val PERMISSION_CALLBACK_CONSTANT = 101
     private val REQUEST_PERMISSION_SETTING = 102
@@ -65,8 +64,8 @@ class MainActivity : AppCompatActivity(),
     private val INTERVAL = (60000 * 1).toLong()
     private val FASTEST_INTERVAL = (60000 * 0.5).toLong()
 
-    private var mBottomBar: BottomBar? = null
-    private var mNavController: FragNavController? = null
+    var mBottomBar: BottomBar? = null
+    var mNavController: FragNavController? = null
     internal lateinit var mGoogleApiClient: GoogleApiClient
     private var mCurrentLocation: Location? = null
     internal lateinit var mLocationRequest: LocationRequest
@@ -91,11 +90,11 @@ class MainActivity : AppCompatActivity(),
         Log.d(TAG, "onCreate ...............................");
 
 
-        setSupportActionBar(binding.toolbar)
 
         mGoogleApiClient = GoogleApiClient.Builder(this)
-                .enableAutoManage(this,0, this)
+                .enableAutoManage(this, 0, this)
                 .addApi(LocationServices.API)
+                .addOnConnectionFailedListener(this)
                 .addConnectionCallbacks(this)
                 .build()
 
@@ -411,8 +410,21 @@ class MainActivity : AppCompatActivity(),
                 .build()
     }
 
-    public fun getApiClient(): GoogleApiClient {
+    fun getApiClient(): GoogleApiClient {
         return mGoogleApiClient
     }
+
+    fun setLastIndex(index: Int?) {
+        if(index != null) {
+            lastIndex = index
+        }
+    }
+
+    companion object {
+
+        val INDEX_PROFILE = FragNavController.TAB4
+    }
+
+
 
 }

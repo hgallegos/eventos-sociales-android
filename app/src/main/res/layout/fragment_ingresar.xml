@@ -18,13 +18,13 @@
         android:orientation="vertical">
 
         <android.support.design.widget.AppBarLayout
-            android:id="@+id/perfil_appbar"
+            android:id="@+id/ingresar_appbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
             <android.support.v7.widget.Toolbar
-                android:id="@+id/search_toolbar"
+                android:id="@+id/ingresar_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
@@ -38,25 +38,12 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="27dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:text="Descubre la cultura de tu ciudad"
-                android:textAlignment="center"
-                android:textSize="@dimen/material_text_size_display_1_regular" />
-
             <EditText
                 android:id="@+id/nombre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/title"
                 android:layout_margin="20dp"
                 android:ems="10"
                 android:hint="@string/search_name"
@@ -73,24 +60,14 @@
                 android:hint="@string/search_where"
                 android:inputType="text" />
 
-            <Spinner
-                android:id="@+id/categoria"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/lugar"
-                android:layout_alignStart="@+id/lugar"
-                android:layout_below="@+id/lugar"
-                app:itemBinding="@{spinnerViewModel.itemBinding}"
-                app:items="@{spinnerViewModel.items}" />
 
             <Button
-                android:id="@+id/search"
+                android:id="@+id/save"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/categoria"
-                android:layout_below="@+id/categoria"
-                android:drawableStart="@drawable/ic_search"
-                android:text="@string/search_button" />
+                android:layout_alignStart="@+id/lugar"
+                android:layout_below="@+id/lugar"
+                android:text="Añadir" />
         </RelativeLayout>
 
     </android.support.design.widget.CoordinatorLayout>

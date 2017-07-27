@@ -3,6 +3,8 @@ package com.hm.eventossociales.fragments
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -47,6 +49,11 @@ class ExplorarFragment : BaseFragment() {
 
         val viewModel = SpinnerViewModel()
         binding.spinnerViewModel = viewModel
+
+        binding.searchToolbar.title = "Busca eventos"
+
+        (activity as AppCompatActivity).setSupportActionBar(binding.searchToolbar)
+
 
         getCategories();
 
