@@ -61,7 +61,7 @@ class ExplorarFragment : BaseFragment() {
         return binding.root
     }
 
-    public fun getCategories() {
+    fun getCategories() {
         val categoriaService = retrofitInstance.create(CategoriaService::class.java);
 
         categoriaService.getCategorias()

@@ -8,4 +8,10 @@
     <string name="lista_eventos">Lista de eventos</string>
     <string name="evento">Evento</string>
     <string name="facebook_app_id">257202861445039</string>
+    <string name="add_nombre">Nombre evento</string>
+    <string name="add_lugar">Lugar</string>
+    <string name="add_direccion">Dirección</string>
+    <string name="add_descripcion">Descripción</string>
+    <string name="add_desde">Desde</string>
+    <string name="add_hasta">Hasta</string>
 </resources>
