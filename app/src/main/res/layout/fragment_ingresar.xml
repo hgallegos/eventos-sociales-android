@@ -89,6 +89,7 @@
                 android:layout_alignEnd="@+id/nombre"
                 android:layout_alignStart="@+id/nombre"
                 android:layout_below="@+id/descripcion"
+                android:focusable="false"
                 android:ems="10"
                 android:clickable="true"
                 android:hint="@string/add_desde"
@@ -101,7 +102,9 @@
                 android:layout_alignEnd="@+id/nombre"
                 android:layout_alignStart="@+id/nombre"
                 android:layout_below="@+id/desde"
+                android:focusable="false"
                 android:ems="10"
+                android:clickable="true"
                 android:hint="@string/add_hasta"
                 android:inputType="date" />
 

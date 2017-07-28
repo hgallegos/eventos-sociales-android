@@ -77,7 +77,7 @@ class PerfilFragment : BaseFragment(), FbConnectHelper.OnFbSignInListener {
         } else {
             view = inflater!!.inflate(R.layout.fragment_login, container, false);
             mToolbar = view?.findViewById<Toolbar>(R.id.login_toolbar)
-            mToolbar?.title = "Iniciar Sesion"
+            mToolbar?.title = "Iniciar sesión"
 
             val btnFace = view?.findViewById<AppCompatButton>(R.id.facebook)
             val btnGoogle = view?.findViewById<SignInButton>(R.id.google)

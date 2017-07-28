@@ -1,5 +1,6 @@
 package com.hm.eventossociales.fragments
 
+import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.databinding.DataBindingUtil
@@ -10,6 +11,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.DatePicker
 import android.widget.Toast
 import com.facebook.CallbackManager
 import com.facebook.FacebookSdk
@@ -28,8 +30,10 @@ import com.hm.eventossociales.databinding.FragmentPerfilBinding
 import com.hm.eventossociales.databinding.FragmentSearchBinding
 import com.hm.eventossociales.util.FbConnectHelper
 import org.json.JSONException
+import java.text.SimpleDateFormat
+import java.util.*
 
-class AddFragment : BaseFragment(), FbConnectHelper.OnFbSignInListener {
+class AddFragment : BaseFragment(), FbConnectHelper.OnFbSignInListener, DatePickerDialog.OnDateSetListener {
 
     internal lateinit var binding: FragmentIngresarBinding;
     private val TAG = "AddFragment"
@@ -39,6 +43,8 @@ class AddFragment : BaseFragment(), FbConnectHelper.OnFbSignInListener {
     var fbConnectHelper: FbConnectHelper? = null
     var mGoogleApiClient: GoogleApiClient? = null
     internal lateinit var mToolbar: Toolbar
+    internal lateinit var myCalendar: Calendar
+    private var isDesde = false;
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view: View? = null
@@ -60,7 +66,20 @@ class AddFragment : BaseFragment(), FbConnectHelper.OnFbSignInListener {
 
             mToolbar.title = "Añadir un evento"
 
+            myCalendar = Calendar.getInstance()
 
+            binding.desde.setOnClickListener {
+                DatePickerDialog(activity, this, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                isDesde = true
+            }
+            binding.hasta.setOnClickListener {
+                DatePickerDialog(activity, this, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                isDesde = false
+            }
 
             view = binding.root
         } else {
@@ -214,5 +233,28 @@ class AddFragment : BaseFragment(), FbConnectHelper.OnFbSignInListener {
         }
     }
 
+    override fun onDateSet(datePicker: DatePicker, year: Int, monthYear: Int, dayMonth: Int) {
+        myCalendar.set(Calendar.YEAR, year)
+        myCalendar.set(Calendar.MONTH, monthYear)
+        myCalendar.set(Calendar.DAY_OF_MONTH, dayMonth)
+        if (isDesde) {
+            updateDesde()
+        } else {
+            updateHasta()
+        }
+    }
 
+    private fun updateDesde() {
+        val myFormat = "dd-MM-y" //In which you need put here
+        val sdf = SimpleDateFormat(myFormat, Locale.US)
+
+        binding.desde.setText(sdf.format(myCalendar.time));
+    }
+
+    private fun updateHasta() {
+        val myFormat = "dd-MM-Y" //In which you need put here
+        val sdf = SimpleDateFormat(myFormat, Locale.US)
+
+        binding.hasta.setText(sdf.format(myCalendar.time));
+    }
 }
