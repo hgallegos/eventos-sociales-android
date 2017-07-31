@@ -29,6 +29,11 @@ import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ResultCallback
 import com.google.android.gms.common.api.Status
+import com.google.android.gms.maps.model.LatLng
+import com.hm.eventossociales.activities.EditPerfilActivity
+import com.hm.eventossociales.activities.EventoActivity
+import com.hm.eventossociales.domain.Evento
+import kotlinx.android.synthetic.main.fragment_perfil.*
 
 
 class PerfilFragment : BaseFragment(), FbConnectHelper.OnFbSignInListener {
@@ -42,6 +47,8 @@ class PerfilFragment : BaseFragment(), FbConnectHelper.OnFbSignInListener {
     var binding: FragmentPerfilBinding? = null;
     private var mToolbar: Toolbar? = null
     private var mAppBarLayout: AppBarLayout? = null
+    private var typeOfSign: String? = null
+    private var email: String? = null
 
 
     override fun onStart() {
@@ -67,11 +74,14 @@ class PerfilFragment : BaseFragment(), FbConnectHelper.OnFbSignInListener {
         if (isTheUserLoginIn()) {
             binding = DataBindingUtil.inflate(inflater, R.layout.fragment_perfil, container, false)
             val logoutBtn = binding?.logout
+            val editBtn = binding?.btnEdit
             mToolbar = binding?.perfilToolbar
 
 
             getPerfilInfo()
 
+
+            editBtn?.setOnClickListener { starEditarPerfil() }
             logoutBtn?.setOnClickListener { onLogoutClicked() }
             view = binding!!.root
         } else {
@@ -81,6 +91,8 @@ class PerfilFragment : BaseFragment(), FbConnectHelper.OnFbSignInListener {
 
             val btnFace = view?.findViewById<AppCompatButton>(R.id.facebook)
             val btnGoogle = view?.findViewById<SignInButton>(R.id.google)
+            val btnSignIn = view?.findViewById<AppCompatButton>(R.id.signin)
+            btnSignIn?.setOnClickListener { onSignInClicked() }
             btnGoogle?.setOnClickListener { onGoogleClicked() }
             btnFace?.setOnClickListener { onFacebookClicked(view!!) }
             // onFacebookClicked(view)
@@ -90,6 +102,7 @@ class PerfilFragment : BaseFragment(), FbConnectHelper.OnFbSignInListener {
 
         return view
     }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -114,6 +127,7 @@ class PerfilFragment : BaseFragment(), FbConnectHelper.OnFbSignInListener {
             prefs.edit().putString(USER_NAME, name).apply()
             prefs.edit().putString(USER_EMAIL, email).apply()
             prefs.edit().putString(USER_PROFILE_IMAGE, profileImg).apply()
+            prefs.edit().putString(SOCIAL, FACEBOOK).apply()
 
             fragmentManager.beginTransaction().detach(this).attach(this).commit()
 
@@ -167,6 +181,15 @@ class PerfilFragment : BaseFragment(), FbConnectHelper.OnFbSignInListener {
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
 
+    private fun onSignInClicked() {
+        val packageName = MainActivity::getPackageName.name
+        val prefs = activity.getSharedPreferences(packageName, Context.MODE_PRIVATE)
+        prefs.edit().putString(USER_NAME, "Hans").apply()
+        prefs.edit().putString(USER_EMAIL, "hans693@gmail.com").apply()
+
+        switchView()
+    }
+
     private fun handleSignInResult(result: GoogleSignInResult) {
         Log.d(TAG, "handleSignInResult:" + result.isSuccess)
         if (result.isSuccess) {
@@ -177,6 +200,7 @@ class PerfilFragment : BaseFragment(), FbConnectHelper.OnFbSignInListener {
             val prefs = activity.getSharedPreferences(packageName, Context.MODE_PRIVATE)
             prefs.edit().putString(USER_NAME, acct?.displayName).apply()
             prefs.edit().putString(USER_EMAIL, acct?.email).apply()
+            prefs.edit().putString(SOCIAL, GOOGLE).apply()
 
             if (acct?.photoUrl != null) prefs.edit().putString(USER_PROFILE_IMAGE, acct.photoUrl?.toString()).apply()
 
@@ -242,6 +266,21 @@ class PerfilFragment : BaseFragment(), FbConnectHelper.OnFbSignInListener {
             Glide.with(activity).load(imageUrl).into(binding?.perfilImage)
         }
 
+        typeOfSign = sharedPref.getString(SOCIAL, null)
+
+        email = sharedPref.getString(USER_EMAIL, null)
+
+
         binding?.perfilToolbar?.title = sharedPref.getString(USER_NAME, "")
+    }
+
+    private fun starEditarPerfil() {
+        if (typeOfSign != null) {
+            Toast.makeText(activity, "Edita tu perfil en " + typeOfSign, Toast.LENGTH_LONG).show()
+        } else {
+            val intent = Intent(activity, EditPerfilActivity::class.java)
+            intent.putExtra("email", email)
+            startActivity(intent)
+        }
     }
 }

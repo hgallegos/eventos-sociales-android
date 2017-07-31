@@ -191,6 +191,7 @@ class MainActivity : AppCompatActivity(),
         super.onStop()
         Log.d(TAG, "onStop fired ..............")
         //mGoogleApiClient.disconnect()
+        mGoogleApiClient.connect()
         startLocationUpdates()
         Log.d(TAG, "isConnected ...............: " + mGoogleApiClient.isConnected)
     }
@@ -256,6 +257,7 @@ class MainActivity : AppCompatActivity(),
 
     override fun onPause() {
         super.onPause()
+        mGoogleApiClient.connect()
         startLocationUpdates()
     }
 

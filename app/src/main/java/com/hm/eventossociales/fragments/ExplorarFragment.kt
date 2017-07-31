@@ -11,10 +11,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Spinner
 import com.hm.eventossociales.R
 import com.hm.eventossociales.activities.ListaEventosActivity
 import com.hm.eventossociales.databinding.ActivityEventoBinding
 import com.hm.eventossociales.databinding.FragmentSearchBinding
+import com.hm.eventossociales.domain.Categoria
 import com.hm.eventossociales.domain.views.ItemViewModel
 import com.hm.eventossociales.domain.views.SpinnerViewModel
 import com.hm.eventossociales.services.CategoriaService
@@ -84,11 +86,12 @@ class ExplorarFragment : BaseFragment() {
     fun searchForEvents() {
 
         val intent: Intent = Intent(activity, ListaEventosActivity::class.java)
-        val nombreEdit = view?.findViewById<EditText>(R.id.nombre)
-        val lugarEdit = view?.findViewById<EditText>(R.id.lugar)
+        val nombreEdit = binding.nombre
+        val lugarEdit = binding.lugar
+        val categoriaSprinner = binding.categoria
         intent.putExtra("nombre", nombreEdit?.text.toString())
         intent.putExtra("lugar", lugarEdit?.text.toString())
-        /*intent.putExtra("categoria", categoriaText?.text.toString())*/
+        intent.putExtra("categoria", (categoriaSprinner?.selectedItem as Categoria).self?.href)
 
         startActivity(intent)
 

@@ -32,14 +32,47 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_margin="20dp">
+
+
+            <EditText
+                android:id="@+id/correo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:ems="10"
+                android:hint="Email"
+                android:inputType="text" />
+
+            <EditText
+                android:layout_below="@+id/correo"
+                android:id="@+id/password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:ems="10"
+                android:hint="Contraseña"
+                android:inputType="textPassword" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/signin"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Iniciar sesión"
+                android:layout_alignStart="@+id/google"
+                android:layout_below="@+id/password"
+                />
 
             <com.google.android.gms.common.SignInButton
                 android:id="@+id/google"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_alignParentTop="true"
+                android:layout_below="@+id/signin"
                 android:layout_centerHorizontal="true" />
 
             <android.support.v7.widget.AppCompatButton

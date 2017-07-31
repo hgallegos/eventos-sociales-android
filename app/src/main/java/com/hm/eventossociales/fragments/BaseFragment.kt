@@ -44,6 +44,9 @@ open class BaseFragment : Fragment() {
         val USER_NAME = "name"
         val USER_EMAIL = "email"
         val USER_PROFILE_IMAGE = "profileImage"
+        val SOCIAL = "social"
+        val FACEBOOK = "Facebook"
+        val GOOGLE = "Google"
     }
 
     fun isTheUserLoginIn(): Boolean {

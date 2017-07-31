@@ -34,6 +34,11 @@
             android:label="@string/evento"
             android:parentActivityName=".activities.ListaEventosActivity" />
 
+        <activity
+            android:name=".activities.EditPerfilActivity"
+            android:label="@string/evento"
+            android:parentActivityName=".MainActivity" />
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
