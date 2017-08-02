@@ -3,9 +3,8 @@ package com.hm.eventossociales.services
 import com.hm.eventossociales.domain.Evento
 import com.hm.eventossociales.domain.EventoResource
 import com.hm.eventossociales.domain.UsuarioResource
-import retrofit2.http.GET
-import retrofit2.http.Query
-import retrofit2.http.Url
+import retrofit2.Call
+import retrofit2.http.*
 import rx.Observable
 
 /**
@@ -25,6 +24,12 @@ interface EventoService {
     @GET("eventos/search/nombreODireccion")
     fun searchByNombreAndLugar(@Query("nombre") nombre: String, @Query("direccion") direccion: String): Observable<EventoResource>
 
+    @GET("eventos/search/filterBy")
+    fun searchBy(@Query("nombre") nombre: String, @Query("direccion") direccion: String, @Query("categoria") categoria: Int): Observable<EventoResource>
+
     @GET
     fun getEventoByUrl(@Url url: String?): Observable<Evento>
+
+    @POST("/eventos")
+    fun saveEvento(@Body evento: Evento): Observable<Evento>
 }

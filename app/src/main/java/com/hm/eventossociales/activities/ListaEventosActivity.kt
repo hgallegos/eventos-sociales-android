@@ -30,13 +30,13 @@ class ListaEventosActivity : AppCompatActivity() {
     private val LOCATION = "location"
     private val NOMBRE = "nombre"
     private val LUGAR = "lugar"
+    private val CATEGORIA = "categoria"
     internal lateinit var binding: ActivityListaEventosBinding
     var next: String? = null
     var location: Location? = null
     var nombre: String? = null
     var lugar: String? = null
     var categoria: Int? = null
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,6 +76,7 @@ class ListaEventosActivity : AppCompatActivity() {
         location = savedInstanceState?.getParcelable(LOCATION)
         nombre = savedInstanceState?.getString(NOMBRE)
         lugar = savedInstanceState?.getString(LUGAR)
+        categoria = savedInstanceState?.getInt(CATEGORIA, 0)
     }
 
     public override fun onSaveInstanceState(outState: Bundle) {
@@ -84,15 +85,17 @@ class ListaEventosActivity : AppCompatActivity() {
         } else if (nombre != null) {
             outState.putString(NOMBRE, nombre)
             outState.putString(LUGAR, lugar)
+            outState.putInt(CATEGORIA, categoria!!)
         }
         super.onSaveInstanceState(outState)
     }
 
 
     private fun getParamsForSearch() {
-        if( intent.hasExtra(NOMBRE)) {
+        if (intent.hasExtra(NOMBRE)) {
             nombre = intent.getStringExtra(NOMBRE)
             lugar = intent.getStringExtra(LUGAR)
+            categoria = intent.getIntExtra(CATEGORIA, 0)
         }
     }
 
@@ -143,7 +146,7 @@ class ListaEventosActivity : AppCompatActivity() {
     private fun searchEventos(nombre: String?, lugar: String?, categoria: Int?) {
         val retro = getRetrofitInstance()
         val eventoService: EventoService = retro.create(EventoService::class.java)
-        if (nombre != null && lugar != null && categoria == null) {
+        if (nombre != null && lugar != null && categoria == 0) {
             eventoService.searchByNombreAndLugar(nombre, lugar)
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -174,6 +177,39 @@ class ListaEventosActivity : AppCompatActivity() {
                             }
 
                     )
+        } else {
+            if (categoria != null && categoria > 0) {
+                eventoService.searchBy(nombre!!, lugar!!, categoria)
+                        .subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                { response ->
+                                    binding.toolbar.title = response.page?.totalElements.toString() + " resultados"
+                                    val viewModel = ItemViewModel()
+                                    viewModel.addItems(response.eventos)
+                                    binding.itemViewModel = viewModel
+                                    next = response.next?.href
+                                },
+                                {
+                                    error ->
+                                    Log.e(TAG, error.message)
+                                },
+                                {
+
+                                    binding.listaEventos.addOnScrollListener(object : EndlessRecyclerOnScrollListener(binding.listaEventos.layoutManager as LinearLayoutManager) {
+                                        override fun onLoadMore() {
+                                            if (next != null) {
+                                                addDataToList(eventoService)
+                                            } else {
+                                                binding.itemProgressBar.visibility = View.GONE
+                                                Toast.makeText(applicationContext, "No hay más eventos", Toast.LENGTH_LONG).show()
+                                            }
+                                        }
+                                    })
+                                }
+
+                        )
+            }
         }
 
 

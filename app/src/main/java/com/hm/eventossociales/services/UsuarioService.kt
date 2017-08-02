@@ -1,8 +1,11 @@
 package com.hm.eventossociales.services
 
+import android.provider.ContactsContract
+import com.hm.eventossociales.domain.Usuario
 import com.hm.eventossociales.domain.UsuarioResource
 import okhttp3.ResponseBody
 import retrofit2.http.GET
+import retrofit2.http.Query
 import retrofit2.http.Url
 import rx.Observable
 
@@ -16,4 +19,7 @@ interface UsuarioService {
 
     @GET
     fun getNextUsuarios(@Url url: String?): Observable<UsuarioResource>
+
+    @GET("usuarios/search/email")
+    fun getUsuarioByEmail(@Query("email") email: String?): Observable<UsuarioResource>
 }

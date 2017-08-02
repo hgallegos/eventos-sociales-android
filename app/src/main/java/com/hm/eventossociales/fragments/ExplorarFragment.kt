@@ -91,7 +91,7 @@ class ExplorarFragment : BaseFragment() {
         val categoriaSprinner = binding.categoria
         intent.putExtra("nombre", nombreEdit?.text.toString())
         intent.putExtra("lugar", lugarEdit?.text.toString())
-        intent.putExtra("categoria", (categoriaSprinner?.selectedItem as Categoria).self?.href)
+        intent.putExtra("categoria", (categoriaSprinner?.selectedItem as Categoria).self?.href?.last()?.toString()?.toInt())
 
         startActivity(intent)
 

@@ -16,6 +16,7 @@ class Usuario : BaseObservable() {
     var usuario: String? = null
     var edad: Int? = null
     var nombre: String? = null
+    var estado: String? = null
 
     @Bindable
     var email: String? = null

@@ -72,6 +72,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentEnd="true"
                     android:drawableStart="@drawable/ic_power"
+                    android:layout_gravity="center_horizontal"
                     android:text="Cerrar Sesión" />
 
             </android.support.v4.widget.NestedScrollView>

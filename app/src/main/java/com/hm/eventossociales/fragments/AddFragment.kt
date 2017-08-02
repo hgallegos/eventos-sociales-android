@@ -28,9 +28,16 @@ import com.hm.eventossociales.R
 import com.hm.eventossociales.databinding.FragmentIngresarBinding
 import com.hm.eventossociales.databinding.FragmentPerfilBinding
 import com.hm.eventossociales.databinding.FragmentSearchBinding
+import com.hm.eventossociales.domain.Evento
+import com.hm.eventossociales.services.EventoService
+import com.hm.eventossociales.services.UsuarioService
 import com.hm.eventossociales.util.FbConnectHelper
 import org.json.JSONException
+import rx.android.schedulers.AndroidSchedulers
+import rx.schedulers.Schedulers
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.ZoneOffset
 import java.util.*
 
 class AddFragment : BaseFragment(), FbConnectHelper.OnFbSignInListener, DatePickerDialog.OnDateSetListener {
@@ -81,6 +88,8 @@ class AddFragment : BaseFragment(), FbConnectHelper.OnFbSignInListener, DatePick
                 isDesde = false
             }
 
+            binding.save.setOnClickListener { saveEvento() }
+
             view = binding.root
         } else {
             view = inflater!!.inflate(R.layout.fragment_login, container, false)
@@ -99,6 +108,41 @@ class AddFragment : BaseFragment(), FbConnectHelper.OnFbSignInListener, DatePick
         (activity as MainActivity).setSupportActionBar(mToolbar)
 
         return view
+    }
+
+    private fun saveEvento() {
+        val sharedPref = activity.getSharedPreferences(MainActivity::getPackageName.name, Context.MODE_PRIVATE)
+
+
+        retrofitInstance.create(UsuarioService::class.java)
+                .getUsuarioByEmail(sharedPref.getString(USER_EMAIL, ""))
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        { response ->
+                            val evento: Evento = Evento()
+                            evento.nombre = binding.nombre.text.toString()
+                            evento.descripcion = binding.descripcion.text.toString()
+                            evento.usuario = response.usuarios?.get(0)?.self
+                            val cal: Calendar = Calendar.getInstance()
+                            evento.fechaRegistro = Date(cal.timeInMillis)
+                            evento.fechaInicio = Date(cal.timeInMillis)
+                            evento.fechaFin = Date(cal.timeInMillis)
+                            retrofitInstance.create(EventoService::class.java)
+                                    .saveEvento(evento)
+                                    .subscribeOn(Schedulers.newThread())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(
+                                            { responsePost ->
+                                                Log.d("asd", responsePost.nombre)
+                                            },
+                                            { error ->
+                                                Toast.makeText(activity, error.cause.toString(), Toast.LENGTH_SHORT).show()
+                                            }
+                                    )
+                        }
+                )
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

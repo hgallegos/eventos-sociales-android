@@ -92,7 +92,6 @@ class MainActivity : AppCompatActivity(),
 
 
         mGoogleApiClient = GoogleApiClient.Builder(this)
-                .enableAutoManage(this, 0, this)
                 .addApi(LocationServices.API)
                 .addOnConnectionFailedListener(this)
                 .addConnectionCallbacks(this)
@@ -202,7 +201,8 @@ class MainActivity : AppCompatActivity(),
     }
 
     protected fun startLocationUpdates() {
-        if (canUpdateLocation) {
+        val sharedPref = getSharedPreferences(MainActivity::getPackageName.name, Context.MODE_PRIVATE)
+        if (canUpdateLocation && sharedPref.contains("email")) {
             if (mGoogleApiClient.isConnected) {
                 val pendingResult = LocationServices.FusedLocationApi.requestLocationUpdates(
                         mGoogleApiClient, mLocationRequest, this)
@@ -228,10 +228,13 @@ class MainActivity : AppCompatActivity(),
         if (mCurrentLocation == null) {
             Log.d(TAG, "FirstAttemp")
             mCurrentLocation = location
-        } else if (isDistanceOverThan10(location)) {
-            Log.d(TAG, "The distance is over than 10 km")
-            areEventsNearby(location)
-            mCurrentLocation = location
+        } else {
+            if (isDistanceOverThan10(location)) {
+                Log.d(TAG, "The distance is over than 10 km")
+                areEventsNearby(location)
+                mCurrentLocation = location
+            }
+
         }
         mLastUpdateTime = DateFormat.getTimeInstance().format(Date())
         Log.d(TAG, location.latitude.toString() + "" + location.longitude.toString())
@@ -417,7 +420,7 @@ class MainActivity : AppCompatActivity(),
     }
 
     fun setLastIndex(index: Int?) {
-        if(index != null) {
+        if (index != null) {
             lastIndex = index
         }
     }
@@ -426,7 +429,6 @@ class MainActivity : AppCompatActivity(),
 
         val INDEX_PROFILE = FragNavController.TAB4
     }
-
 
 
 }
